@@ -4,36 +4,57 @@
 {% block title %}Blog | La Caffettiera {% endblock %}
 
 {% block content %}
-  {% for post in posts %}
-      <section class="page-section cta">
-        <div class="container">
-          <div class="row">
-            <div class="col-xl-9 mx-auto">
-              <div class="cta-innerv text-center rounded">
-                <h2 class="section-heading mb-5">
-                  <span class="section-heading-upper">{{post.published|date:"SHORT_DATE_FORMAT"}}</span>
-                  <span class="section-heading-lower">{{post.title}}</span>
-                </h2>
-                <p class="mb-0">
-                  <img class="mx-auto d-flex rounded img-fluid mb-3 mb-lg-0" src="{{post.image.url}}" alt="">
-                </p>
-                <p class="mb-0 mbt">
-                  {{post.content|linebreaks}}
-                </p>
-                <p class="mb-0 mbt">
-                   <span class="section-heading-under">Publicado por <em><b>{{post.author}}</b></em> en
-                  <em>
-                  {% for category in post.categories.all %}
-                    <a href="{% url 'category' category.id %}" class="link">{{category.name}}</a>{% if not forloop.last%},{% endif %}
-                  {% endfor %}
-                  </em>
-                  </span>
-                </p>
-              </div>
-
+<section class="page-section cta">
+    <div class="cta-innerv text-center rounded">
+    {% for post in posts %}
+            <!-- Proyecto -->
+            <div class="row">
+                <div class="col-lg-3 col-md-4 offset-lg-1">
+                    <img class="mx-auto d-flex rounded img-fluid mb-3 mb-lg-0" src="{{post.image.url}}" alt=""> 
+                </div>
+                <div class="col-lg-7 col-md-8">
+                     <h3 class="section-heading title" align="left">{{post.title}}</h3>
+                            
+                    <p align="left">
+                        {{post.content|truncatewords:30}}
+                        <a href="{% url 'post_detail' post.id %}" class="link">Mas Informacion</a>   
+                    </p>
+                        
+                    <span class="section-heading-under">Publicado por <em><b>{{post.author}}</b></em> en
+                        <em>
+                             {% for category in post.categories.all %}
+                                <a href="{% url 'category' category.id %}" class="link">{{category.name}}</a>{% if not forloop.last%},{% endif %}
+                            {% endfor %}
+                        </em> | {{post.published|date:"Y-m-d"}}.
+                    </span>
+                    
+                </div>  
             </div>
-          </div>
-        </div>
-      </section>
-  {% endfor %}
+            <br>
+    {% endfor %}
+    </div>
+    <p class="mb-0 mbt">
+        <nav aria-label="Page navigation">
+            <span class="pagination justify-content-center">
+                {% if posts.has_other_pages %}
+                    <div class="container text-center">
+                        <span class="step-links">
+                            {% if posts.has_previous %}
+                                <a href="?page={{ posts.previous_page_number }}">previous</a>
+                            {% endif %}
+                            {% if posts.has_next %}
+                                <a href="?page={{ posts.next_page_number }}">next</a>
+                                <a href="?page={{ posts.paginator.num_pages }}">last &raquo;</a>
+                            {% endif %}
+                        </span>
+                        <br>
+                        <span class="current container text-center">
+                            Page {{ posts.number }} of {{ posts.paginator.num_pages }}.
+                        </span>
+                    </div>
+                {% endif %}
+            </span>
+        </nav>
+    </p>
+</section>
 {% endblock %}

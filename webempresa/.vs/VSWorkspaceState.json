@@ -1,13 +1,13 @@
 {
   "ExpandedNodes": [
     "",
-    "\\contact",
-    "\\contact\\templates",
-    "\\contact\\templates\\contact",
-    "\\pages\\templates",
-    "\\pages\\templates\\pages",
-    "\\social"
+    "\\blog",
+    "\\blog\\templates",
+    "\\blog\\templates\\blog",
+    "\\core\\templates",
+    "\\core\\templates\\core",
+    "\\webempresa"
   ],
-  "SelectedNode": "\\contact\\views.py",
+  "SelectedNode": "\\blog\\views.py",
   "PreviewInSolutionExplorer": false
 }
